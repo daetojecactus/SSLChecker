@@ -1,6 +1,16 @@
 import { execSync } from "child_process";
 import { pki } from "node-forge";
 
+// Функция для форматирования даты в читаемый формат
+function formatReadableDate(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  };
+  return date.toLocaleDateString("ru-RU", options);
+}
+
 export async function sslInfo(domain: string) {
   console.log("А тут получен домен??", domain);
 
@@ -12,6 +22,8 @@ export async function sslInfo(domain: string) {
   const expDate: Date = cert.validity.notAfter;
   const certAuthority: string = cert.issuer.getField("O")?.value || "Unknown";
   const commName: string = cert.subject.getField("CN")?.value || "Unknown";
+  const signatureAlgorithm: string = cert.siginfo.algorithmOid || "Unknown";
+  const serialNumber: string = cert.serialNumber || "Unknown";
   const currDate: number = Date.now();
   const daysLeft: number = Math.floor(
     (expDate.getTime() - currDate) / (1000 * 60 * 60 * 24)
@@ -38,8 +50,10 @@ export async function sslInfo(domain: string) {
         commonName: parsedCert.subject.getField("CN")?.value || "Unknown",
         certificateAuthority:
           parsedCert.issuer.getField("O")?.value || "Unknown",
-        validFrom: parsedCert.validity.notBefore,
-        validUntil: parsedCert.validity.notAfter,
+        validFrom: formatReadableDate(parsedCert.validity.notBefore),
+        validUntil: formatReadableDate(parsedCert.validity.notAfter),
+        signatureAlgorithm: parsedCert.siginfo.algorithmOid || "Unknown",
+        serialNumber: parsedCert.serialNumber || "Unknown",
       };
     });
 
@@ -70,7 +84,9 @@ export async function sslInfo(domain: string) {
     commName: commName,
     certAuthority: certAuthority,
     daysLeft: daysLeft,
-    expDate: expDate.toISOString(),
+    expDate: formatReadableDate(expDate),
+    signatureAlgorithm: signatureAlgorithm,
+    serialNumber: serialNumber,
   };
 
   return {
