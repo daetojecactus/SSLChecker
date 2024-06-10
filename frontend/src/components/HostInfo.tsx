@@ -1,28 +1,40 @@
-import React from 'react'
+import React from "react";
 
-interface Host {
-    domain: string,
-    apAddr: string,
-    webServer: string,
-    ipOrgName: string
+export interface Host {
+  domain: string;
+  ipAddr: string;
+  webServer: string;
+  ipOrgName: string;
 }
 
 interface HostInfoProps {
-    hostInfo: Host | null
+  hostInfo: Host | null;
 }
 
-export default function HostInfo({hostInfo}: HostInfoProps) {
-
-    if (!hostInfo) {
-        return null; // Если информации нет, ничего не отображаем
-      }
+export default function HostInfo({ hostInfo }: HostInfoProps) {
+  if (!hostInfo) {
+    return null; // Если информации нет, ничего не отображаем
+  }
 
   return (
-    <div>
-        <p>{hostInfo.domain}</p>
-        <p>{hostInfo.apAddr}</p>
-        <p>{hostInfo.webServer}</p>
-        <p>{hostInfo.ipOrgName}</p>
+    <div className="block-ssl ssl-info__row">
+      <div className="cell ssl-info__cell">host info:</div>
+      <div className="ssl-info__row-grid">
+        Домен:
+        <span className="ssl-info__bold">{hostInfo.domain}</span>
+      </div>
+      <div className="ssl-info__row-grid">
+        IP-адрес:
+        <span className="ssl-info__bold">{hostInfo.ipAddr}</span>
+      </div>
+      <div className="ssl-info__row-grid">
+        Веб сервер:
+        <span className="ssl-info__bold">{hostInfo.webServer}</span>
+      </div>
+      <div className="ssl-info__row-grid">
+        IP организации:
+        <span className="ssl-info__bold">{hostInfo.ipOrgName}</span>
+      </div>
     </div>
-  )
+  );
 }
