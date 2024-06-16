@@ -18,7 +18,8 @@ export default function HostInfo({ hostInfo }: HostInfoProps) {
 
   return (
     <div className="block-ssl ssl-info__row">
-      <div className="cell ssl-info__cell">host info:</div>
+      <div className="cell ssl-info__cell">Хост:</div>
+      <div className="cell ssl-info__cell">
       <div className="ssl-info__row-grid">
         Домен:
         <span className="ssl-info__bold">{hostInfo.domain}</span>
@@ -34,6 +35,7 @@ export default function HostInfo({ hostInfo }: HostInfoProps) {
       <div className="ssl-info__row-grid">
         IP организации:
         <span className="ssl-info__bold">{hostInfo.ipOrgName}</span>
+      </div>
       </div>
     </div>
   );

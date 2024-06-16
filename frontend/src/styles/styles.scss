@@ -6,28 +6,28 @@
     width: 100%;
   }
 
-&__item {
-  width: 100%;
-  position: relative;
-  height: 40px;
-}
+  &__item {
+    width: 100%;
+    position: relative;
+    height: 40px;
+  }
 
-&__input {
-  padding: 0 20px;
-  height: 40px;
-}
+  &__input {
+    padding: 0 20px;
+    height: 40px;
+  }
 
-&__label {
-  position: absolute;
-  top: -13px;
-  left: 10px;
-  padding: 0 10px;
-  font-size: 12px;
-  color: var(--text-color);
-  pointer-events: none;
-  background: var(--white-color);
-  z-index: 1;
-}
+  &__label {
+    position: absolute;
+    top: -13px;
+    left: 10px;
+    padding: 0 10px;
+    font-size: 12px;
+    color: var(--text-color);
+    pointer-events: none;
+    background: var(--white-color);
+    z-index: 1;
+  }
 
   &__btn {
     width: 100%;
@@ -37,7 +37,6 @@
     border-radius: 10px;
   }
 }
-
 
 .main {
   &__title {
@@ -68,5 +67,41 @@
     margin-top: 10px;
     font-size: 18px;
     line-height: 30px;
+  }
+}
+
+.ssl-info {
+  margin-top: 20px;
+  padding: 20px;
+  position: relative;
+  background-color: var(--white-color);
+  border-radius: 20px;
+
+  &__row {
+    padding: 20px;
+    margin-bottom: 2px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    gap: 10px;
+    width: 100%;
+    background-color: var(--color-bg-grey);
+    border-radius: 20px;
+  }
+
+  &__cell {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  &__row-grid {
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    font-weight: 400;
+  }
+
+  &__bold {
+    font-weight: 700;
   }
 }

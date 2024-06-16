@@ -12,12 +12,12 @@ interface SSLInfo {
   hostInfo: Host;
   mainCert: MainCert;
   chainCerts: ChainCerts[];
+  error?: string;
 }
 
 export default function DomainPage() {
   const router = useRouter();
   const { domain } = router.query;
-  // const [sslInfo, setSSLInfo] = useState(null);
   const [sslInfo, setSSLInfo] = useState<SSLInfo | null>(null);
 
   useEffect(() => {
@@ -26,18 +26,15 @@ export default function DomainPage() {
         .then((data) => {
           setSSLInfo(data);
         })
-        .catch((error) => {
+        .catch((error: any) => {
           console.error("Error fetching SSL info:", error);
+          setSSLInfo(error);
         });
     }
   }, [domain]);
 
   const { handleSubmitDomain } = useAllInfo();
 
-  if (!sslInfo) {
-    return <div>Loading...</div>;
-  }
-  console.log("sslInfo", sslInfo);
   return (
     <main className="main">
       <Container>
@@ -49,11 +46,17 @@ export default function DomainPage() {
           onDomainSubmit={handleSubmitDomain}
           initialDomain={typeof domain === "string" ? domain : ""}
         />
-        <div className="ssl-info">
-          <HostInfo hostInfo={sslInfo.hostInfo} />
-          <MainCertInfo mainCert={sslInfo.mainCert} />
-          <ChainCertsInfo chainCerts={sslInfo.chainCerts} />
-        </div>
+        {sslInfo && sslInfo.error ? (
+          <div>{sslInfo.error}</div>
+        ) : sslInfo ? (
+          <div className="ssl-info">
+            <HostInfo hostInfo={sslInfo.hostInfo} />
+            <MainCertInfo mainCert={sslInfo.mainCert} />
+            <ChainCertsInfo chainCerts={sslInfo.chainCerts} />
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
       </Container>
     </main>
   );
